@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "validacao-fairness"
+version = "0.1.0"
+description = "Validacao de dados, testes estatisticos e fairness no dataset Adult."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+  "numpy>=2.2",
+  "pandas>=2.2",
+  "scikit-learn>=1.6",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.13",
+  "pandas-stubs>=2.2",
+  "pytest>=8.3",
+  "pytest-cov>=5.0",
+  "ruff>=0.8",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/validacao_fairness"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=validacao_fairness --cov-report=term-missing --cov-fail-under=85"
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["ANN", "B", "E", "F", "I", "N", "SIM", "UP"]
+ignore = ["ANN401"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN"]
+
+[tool.mypy]
+python_version = "3.14"
+packages = ["validacao_fairness"]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = false

@@ -1,0 +1,76 @@
+{
+  "fonte": {
+    "dataset": "Adult / Census Income",
+    "pagina_oficial": "https://archive.ics.uci.edu/dataset/2/adult",
+    "doi": "https://doi.org/10.24432/C5XW20",
+    "licenca": "CC BY 4.0"
+  },
+  "registros": {
+    "treino_bruto": 32561,
+    "teste_bruto": 16281,
+    "treino_utilizado": 32537,
+    "teste_utilizado": 16276,
+    "duplicados_treino_removidos": 24,
+    "duplicados_teste_removidos": 5
+  },
+  "qualidade_dados": {
+    "ausentes_treino": {
+      "classe_trabalho": 1836,
+      "ocupacao": 1843,
+      "pais_origem": 583
+    },
+    "ausentes_teste": {
+      "classe_trabalho": 963,
+      "ocupacao": 966,
+      "pais_origem": 274
+    },
+    "observacao_unicidade": "O dataset nao possui chave natural confiavel; por isso nao foi criada regra artificial de unicidade. Registros totalmente duplicados foram contabilizados e removidos antes da modelagem."
+  },
+  "modelo_principal": {
+    "tipo": "RegressaoLogistica",
+    "preprocessamento": "ColumnTransformer com imputacao numerica/categorica, normalizacao numerica e OneHotEncoder com categorias desconhecidas ignoradas.",
+    "acuracia": 0.8511919390513639,
+    "ic_bootstrap_95": {
+      "limite_inferior": 0.8454165642664045,
+      "limite_superior": 0.8567829933644631,
+      "reamostragens": 2000,
+      "semente": 42
+    }
+  },
+  "modelo_referencia": {
+    "tipo": "DummyClassifier",
+    "estrategia": "most_frequent",
+    "acuracia": 0.763701155074957
+  },
+  "comparacao_bootstrap_pareada": {
+    "diferenca_pontual": 0.08749078397640697,
+    "limite_inferior": 0.08103803145736053,
+    "limite_superior": 0.09406488080609487,
+    "reamostragens": 2000,
+    "significativa": true,
+    "modelo_principal_superior": true,
+    "usa_p_valor": false
+  },
+  "fairness": {
+    "metrica": "paridade_demografica",
+    "atributo_sensivel": "sexo",
+    "limite_operacional": 0.1,
+    "gap": 0.1680887947420373,
+    "status": "não atendida",
+    "taxas_por_grupo": [
+      {
+        "grupo": "Feminino",
+        "n_registros": 5420,
+        "predicoes_positivas": 416,
+        "taxa_positiva": 0.07675276752767528
+      },
+      {
+        "grupo": "Masculino",
+        "n_registros": 10856,
+        "predicoes_positivas": 2658,
+        "taxa_positiva": 0.2448415622697126
+      }
+    ],
+    "justificativa": "Paridade demografica foi adotada por avaliar diferencas nas taxas de predicao positiva entre grupos sensiveis. O limite 0,10 e um criterio operacional adotado na analise, nao uma regra legal ou universal."
+  }
+}
